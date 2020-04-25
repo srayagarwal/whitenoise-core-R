@@ -1,0 +1,3 @@
+[submodule "src/whitenoise-core"]
+	path = src/whitenoise-core
+	url = https://github.com/opendifferentialprivacy/whitenoise-core.git

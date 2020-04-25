@@ -1,0 +1,45 @@
+
+ifndef WN_RELEASE
+	RUST_BUILD_TARGET := debug
+else ifeq (WN_RELEASE, false)
+	RUST_BUILD_TARGET := debug
+else
+	RUST_BUILD_TARGET=release
+	RUST_BUILD_FLAG=--release
+endif
+
+ifdef WN_USE_SYSTEM_LIBS
+	ifneq ($(WN_USE_SYSTEM_LIBS), false)
+		RUST_FEATURE_FLAG=--features use-system-libs
+	endif
+endif
+
+LIBDIR = whitenoise-core/target/$(RUST_BUILD_TARGET)
+
+STATLIB_VALIDATOR = $(LIBDIR)/whitenoise_validator.a
+STATLIB_RUNTIME = $(LIBDIR)/whitenoise_runtime.a
+
+PKG_LIBS = -L\$(LIBDIR) -l"whitenoise_validator" -l"whitenoise_runtime"
+
+
+all: $(SHLIB) prototypes
+
+prototypes:
+	@mkdir -p ../inst
+	@rm -rf ../inst/prototypes
+	@cp -fR whitenoise-core/validator-rust/prototypes/ ../inst/prototypes
+
+$(SHLIB): $(STATLIB_VALIDATOR) $(STATLIB_RUNTIME)
+
+$(STATLIB_VALIDATOR):
+	cargo build ${RUST_BUILD_FLAG} --manifest-path=whitenoise-core/validator-rust/Cargo.toml
+
+$(STATLIB_RUNTIME):
+	cargo build ${RUST_BUILD_FLAG} --manifest-path=whitenoise-core/runtime-rust/Cargo.toml ${RUST_FEATURE_FLAG}
+
+clean:
+	rm -Rf $(SHLIB) $(OBJECTS)
+
+realclean:
+	rm -Rf $(SHLIB) $(OBJECTS)
+	rm -Rf whitenoise-core/target

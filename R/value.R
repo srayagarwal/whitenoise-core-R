@@ -4,7 +4,7 @@
 # Created on: 2020-04-20
 
 #' @export
-serializePrivacyUsage <- function(usage) {
+serialize_privacy_usage <- function(usage) {
   if (is.na(usage)) {
     return(list())
   }

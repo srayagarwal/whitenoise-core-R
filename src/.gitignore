@@ -1,3 +1,6 @@
 *.o
 *.so
 *.dll
+
+whitenoise.so
+R/components.R

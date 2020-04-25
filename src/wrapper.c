@@ -4,58 +4,52 @@
 #include <Rinternals.h>
 
 // Import C headers for rust API
-#include "validator-rust/api.h"
-#include "runtime-rust/api.h"
+#include "whitenoise-core/validator-rust/api.h"
+#include "whitenoise-core/runtime-rust/api.h"
 
-//SEXP raw_bytebuffer_test(SEXP buffer) {
-//    // alloc vector of raw s-expressions
-//
-//    ByteBuffer response = struct ByteBuffer {
-//        data: RAW(buffer),
-//        len: length(buffer)
-//    };
-//    return Rf_ScalarString(Rf_mkCharLenCE(response.data, response.len, CE_UTF8));
-//    PROTECT(response = Rf_allocVector(RAWSXP, length(buffer)));
-//    UNPROTECT(1);
-//    return response
-//}
-
-//roundtrip <- cfunction(c(buffer = "raw"), "
-//
-//    typedef struct {
-//      int64_t len;
-//      uint8_t *data;
-//    } ByteBuffer;
-//
-//    ByteBuffer response {
-//        .data= RAW(buffer),
-//        .len= length(buffer)
-//    };R
-//
-////    PROTECT(response_2 = Rf_allocVector(RAWSXP, response.len));
-////    PROTECT(response_2 = Rf_coerceVector(response.data, RAWSXP)))
-////    UNPROTECT(1);
-////    return Rf_coerceVector(*response.data, RAWSXP);
-//    return Rf_ScalarString(Rf_mkCharLenCE((const char *)(response.data), response.len, CE_UTF8));
-//")
-
-
-// Actual Wrappers
 SEXP validate_analysis_wrapper(SEXP buffer) {
     ByteBufferValidator response = validate_analysis(RAW(buffer), Rf_length(buffer));
-//    return Rf_ScalarString(Rf_mkCharLenCE(response.data, response.len, CE_UTF8));
     return Rf_ScalarString(Rf_mkCharLenCE((const char *)(response.data), response.len, CE_UTF8));
-//    return Rf_ScalarString(Rf_mkCharCE(validate_analysis(), CE_UTF8));
 }
-
-//SEXP compute_release_wrapper() {
-//    return Rf_ScalarString(Rf_mkCharCE(compute_release(), CE_UTF8));
-//}
+SEXP compute_privacy_usage_wrapper(SEXP buffer) {
+    ByteBufferValidator response = compute_privacy_usage(RAW(buffer), Rf_length(buffer));
+    return Rf_ScalarString(Rf_mkCharLenCE((const char *)(response.data), response.len, CE_UTF8));
+}
+SEXP generate_report_wrapper(SEXP buffer) {
+    ByteBufferValidator response = generate_report(RAW(buffer), Rf_length(buffer));
+    return Rf_ScalarString(Rf_mkCharLenCE((const char *)(response.data), response.len, CE_UTF8));
+}
+SEXP accuracy_to_privacy_usage_wrapper(SEXP buffer) {
+    ByteBufferValidator response = accuracy_to_privacy_usage(RAW(buffer), Rf_length(buffer));
+    return Rf_ScalarString(Rf_mkCharLenCE((const char *)(response.data), response.len, CE_UTF8));
+}
+SEXP privacy_usage_to_accuracy_wrapper(SEXP buffer) {
+    ByteBufferValidator response = privacy_usage_to_accuracy(RAW(buffer), Rf_length(buffer));
+    return Rf_ScalarString(Rf_mkCharLenCE((const char *)(response.data), response.len, CE_UTF8));
+}
+SEXP get_properties_wrapper(SEXP buffer) {
+    ByteBufferValidator response = get_properties(RAW(buffer), Rf_length(buffer));
+    return Rf_ScalarString(Rf_mkCharLenCE((const char *)(response.data), response.len, CE_UTF8));
+}
+SEXP expand_component_wrapper(SEXP buffer) {
+    ByteBufferValidator response = expand_component(RAW(buffer), Rf_length(buffer));
+    return Rf_ScalarString(Rf_mkCharLenCE((const char *)(response.data), response.len, CE_UTF8));
+}
+SEXP release_wrapper(SEXP buffer) {
+    ByteBufferRuntime response = release(RAW(buffer), Rf_length(buffer));
+    return Rf_ScalarString(Rf_mkCharLenCE((const char *)(response.data), response.len, CE_UTF8));
+}
 
 // Standard R package stuff
 static const R_CallMethodDef CallEntries[] = {
         {"validate_analysis_wrapper", (DL_FUNC) &validate_analysis_wrapper, 1},
-//        {"compute_release", (DL_FUNC) &compute_release_wrapper, 0},
+        {"compute_privacy_usage_wrapper", (DL_FUNC) &compute_privacy_usage_wrapper, 1},
+        {"generate_report_wrapper", (DL_FUNC) &generate_report_wrapper, 1},
+        {"accuracy_to_privacy_usage_wrapper", (DL_FUNC) &accuracy_to_privacy_usage_wrapper, 1},
+        {"privacy_usage_to_accuracy_wrapper", (DL_FUNC) &privacy_usage_to_accuracy_wrapper, 1},
+        {"get_properties_wrapper", (DL_FUNC) &get_properties_wrapper, 1},
+        {"expand_component_wrapper", (DL_FUNC) &expand_component_wrapper, 1},
+        {"release_wrapper", (DL_FUNC) &release_wrapper, 1},
         {NULL, NULL, 0}
 };
 

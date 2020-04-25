@@ -11,18 +11,12 @@
   # list loaded messages
   # print(ls("RProtoBuf:DescriptorPool"))
 
-  componentFilenames <- list.files(
+   component_filenames <- list.files(
     file.path(system.file(package = "whitenoise"), "prototypes", "components"),
     pattern = "*.json", full.names = TRUE)
-  components <- lapply(componentFilenames, jsonlite::read_json)
+  components <- lapply( component_filenames, jsonlite::read_json)
 
-  variantMessageMap <- lapply(components, function(component) component$name)
-  names(variantMessageMap) <- lapply(components, function(component) component$id)
-  assign("variantMessageMap", variantMessageMap, envir = parent.env(environment()))
+  variant_message_map <- lapply(components, function(component) component$name)
+  names(variant_message_map) <- lapply(components, function(component) component$id)
+  assign("variantMessageMap", variant_message_map, envir = parent.env(environment()))
 }
-
-# loadValidator <- function() {
-#   dyn.load(file.path(getwd(), '../validator-c++/cmake-build-debug/lib/libdifferential_privacy.so'))
-#   print('validator loaded')
-#   .Call('hello_world_validator')
-# }
