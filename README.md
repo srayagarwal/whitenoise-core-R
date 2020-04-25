@@ -8,7 +8,7 @@ See also the accompanying [WhiteNoise-System](https://github.com/opendifferentia
 ## 
 
 # IMPORTANT
-he R language bindings are not yet minimally functional.
+The R language bindings are not yet minimally functional.
 
 Differential privacy is the gold standard definition of privacy protection. The WhiteNoise project aims to connect theoretical solutions from the academic community with the practical lessons learned from real-world deployments, to make differential privacy broadly accessible to future deployments. Specifically, we provide several basic building blocks that can be used by people involved with sensitive data, with implementations based on vetted and mature differential privacy research. In WhiteNoise Core, we provide a pluggable open source library of differentially private algorithms and mechanisms for releasing privacy preserving queries and statistics, as well as APIs for defining an analysis and a validator for evaluating these analyses and composing the total privacy loss on a dataset. 
 
@@ -21,7 +21,6 @@ Differentially private computations are specified as a protobuf analysis graph t
   - [Component List](#components)
   - [Architecture](#architecture)
 - [Installation](#installation)
-  - [Binaries](#binaries)
   - [From Source](#from-source)
 - [WhiteNoise Rust Documentation](#whitenoise-rust-documentation)
 - [Communication](#communication)
@@ -29,7 +28,7 @@ Differentially private computations are specified as a protobuf analysis graph t
 
 ---
 
-## More about WhiteNoise Core Python Bindings
+## More about WhiteNoise Core R Bindings
 
 ### Components
 
